@@ -2,98 +2,203 @@ const screens = document.querySelectorAll(".screen");
 
 function showScreen(id) {
   screens.forEach(screen => screen.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
+
+  const target = document.getElementById(id);
+
+  if (target) {
+    target.classList.add("active");
+  }
 }
+
+
+// ===============================
+// START → LETTER COVER
+// ===============================
 
 document.getElementById("startBtn").addEventListener("click", () => {
   showScreen("letter-cover");
 });
 
+
+// ===============================
+// OPEN LETTER
+// ===============================
+
 document.getElementById("openLetterBtn").addEventListener("click", () => {
   showScreen("letter");
 });
 
+
+// ===============================
+// INTRO VIDEO
+// ===============================
+
 const introVideo = document.getElementById("introVideo");
 const introVideoScreen = document.getElementById("intro-video-screen");
 
-async function startIntroVideo() {
+let introStarted = false;
+let introFinished = false;
+
+
+// Next button → Intro video
+document.getElementById("nextToIntroVideo").addEventListener("click", () => {
+
+  introStarted = false;
+  introFinished = false;
+
   showScreen("intro-video-screen");
+
   introVideoScreen.classList.remove("transitioning");
 
-  // User click immediately before this function makes playback much more
-  // likely to be allowed by the browser.
-  try {
-    introVideo.currentTime = 0;
-    await introVideo.play();
-  } catch (error) {
-    // If autoplay is blocked, continue to the photo so the experience
-    // does not get stuck.
-    setTimeout(goToPhoto, 700);
+  introVideo.pause();
+  introVideo.currentTime = 0;
+
+  // IMPORTANT:
+  // Wait until GitHub Pages actually loads enough video data.
+  if (introVideo.readyState >= 2) {
+    playIntroVideo();
+  } else {
+    introVideo.load();
+    introVideo.addEventListener("loadeddata", playIntroVideo, {
+      once: true
+    });
   }
+});
+
+
+function playIntroVideo() {
+
+  if (introStarted || introFinished) return;
+
+  introStarted = true;
+
+  introVideo.play()
+    .then(() => {
+      console.log("Intro video playing successfully");
+    })
+    .catch(error => {
+
+      console.error("Intro video play failed:", error);
+
+      // Try muted playback as fallback.
+      introVideo.muted = true;
+
+      introVideo.play()
+        .then(() => {
+          console.log("Intro video playing muted");
+        })
+        .catch(error2 => {
+          console.error("Muted playback also failed:", error2);
+        });
+    });
 }
 
-function goToPhoto() {
+
+// Intro video finished → Photo
+introVideo.addEventListener("ended", () => {
+
+  if (introFinished) return;
+
+  introFinished = true;
+
   introVideoScreen.classList.add("transitioning");
 
   setTimeout(() => {
+
     introVideo.pause();
     introVideo.currentTime = 0;
+
     introVideoScreen.classList.remove("transitioning");
+
     showScreen("photo-screen");
+
   }, 900);
-}
-
-document.getElementById("nextToIntroVideo").addEventListener("click", startIntroVideo);
-
-introVideo.addEventListener("ended", goToPhoto);
-
-introVideo.addEventListener("error", () => {
-  // Missing/invalid intro video should not block the birthday page.
-  setTimeout(goToPhoto, 300);
 });
+
+
+// Video loading error
+introVideo.addEventListener("error", () => {
+
+  console.error(
+    "Intro video could not be loaded.",
+    introVideo.error
+  );
+
+});
+
+
+// ===============================
+// PHOTO → FINAL VIDEO
+// ===============================
 
 document.getElementById("nextToVideo").addEventListener("click", () => {
   showScreen("video-screen");
 });
 
+
+// ===============================
+// FINAL VIDEO
+// ===============================
+
 const video = document.getElementById("birthdayVideo");
 const playButton = document.getElementById("playVideoBtn");
 
+
+// Tap to Play
 playButton.addEventListener("click", async () => {
+
   try {
+
     await video.play();
+
     playButton.classList.add("hidden");
+
   } catch (error) {
-    // Browser blocked autoplay-style playback; controls still work.
+
+    console.error("Final video play failed:", error);
+
     video.controls = true;
+
   }
+
 });
 
+
+// Video starts
 video.addEventListener("play", () => {
+
   playButton.classList.add("hidden");
 
-  // Once the video starts, remove every extra text element
-  // so the video becomes the only visible content.
   const heading = document.querySelector(".video-heading");
   const finalLine = document.querySelector(".final-line");
 
-  if (heading) heading.classList.add("video-text-hidden");
-  if (finalLine) finalLine.classList.add("video-text-hidden");
+  if (heading) {
+    heading.classList.add("video-text-hidden");
+  }
+
+  if (finalLine) {
+    finalLine.classList.add("video-text-hidden");
+  }
+
 });
 
+
+// Video paused
 video.addEventListener("pause", () => {
+
   if (!video.ended) {
     playButton.classList.remove("hidden");
   }
+
 });
 
+
+// Video finished
 video.addEventListener("ended", () => {
+
   playButton.classList.remove("hidden");
-  playButton.querySelector("span:last-child").textContent = "Play Again";
 
-  const heading = document.querySelector(".video-heading");
-  const finalLine = document.querySelector(".final-line");
+  playButton.querySelector("span:last-child").textContent =
+    "Play Again";
 
-  if (heading) heading.classList.remove("video-text-hidden");
-  if (finalLine) finalLine.classList.remove("video-text-hidden");
 });
