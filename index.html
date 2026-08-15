@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Dada Bhai ❤️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Great+Vibes&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <main class="app">
+
+    <!-- 1. Birthday Intro -->
+    <section class="screen active" id="intro">
+      <div class="intro-glow"></div>
+      <div class="stars"></div>
+
+      <p class="small-line">A little something for someone special</p>
+      <h1 class="birthday-title">
+        <span>Happy Birthday</span>
+        <strong>Dada Bhai</strong>
+      </h1>
+
+      <button class="primary-btn" id="startBtn">Open My Surprise ✨</button>
+    </section>
+
+    <!-- 2. Letter Cover -->
+    <section class="screen" id="letter-cover">
+      <div class="letter-icon">💌</div>
+      <p class="eyebrow">A letter for you</p>
+      <h2>Open Letter</h2>
+      <p class="hint">There are a few words here that I really wanted you to read.</p>
+      <button class="primary-btn" id="openLetterBtn">Open Letter</button>
+    </section>
+
+    <!-- 3. Letter -->
+    <section class="screen" id="letter">
+      <div class="paper">
+        <div class="paper-top">To My Dada Bhai,</div>
+
+        <p>
+          Happy Birthday to one of the most special people in my life.
+          You are not just my dada bhai—you are someone I can look up to,
+          trust, and always count on.
+        </p>
+
+        <p>
+          Thank you for the laughs, the advice, the support, and all those
+          little moments that become beautiful memories without us even noticing.
+        </p>
+
+        <p>
+          I hope this new year of your life brings you happiness, success,
+          peace, and countless reasons to smile. Keep being the amazing person
+          you are.
+        </p>
+
+        <p class="signature">
+          Stay happy. Stay strong. Stay the same.<br>
+          <span>Happy Birthday, Dada Bhai ❤️</span>
+        </p>
+      </div>
+
+      <button class="next-btn" id="nextToIntroVideo">Next →</button>
+    </section>
+
+    <!-- 4. Intro Video -->
+    <section class="screen intro-video-screen" id="intro-video-screen">
+      <video id="introVideo" class="intro-video" playsinline preload="auto">
+        <source src="assets/intro-video.mp4" type="video/mp4">
+        Your browser does not support video playback.
+      </video>
+
+      <div class="intro-transition"></div>
+    </section>
+
+    <!-- 5. Photo -->
+    <section class="screen" id="photo-screen">
+      <div class="photo-card">
+        <img id="birthdayPhoto" src="assets/dada-bhai-photo.jpg" alt="Dada Bhai">
+        <div class="photo-overlay"></div>
+        <div class="photo-caption">
+          <span>One photo.</span>
+          <strong>A thousand memories.</strong>
+        </div>
+      </div>
+
+      <button class="next-btn" id="nextToVideo">Next →</button>
+    </section>
+
+    <!-- 6. Video -->
+    <section class="screen" id="video-screen">
+      <div class="video-heading">
+        <p class="eyebrow">And finally...</p>
+        <h2>A little surprise for you 🎬</h2>
+      </div>
+
+      <div class="video-card" id="videoCard">
+        <video id="birthdayVideo" controls playsinline preload="metadata" style="object-fit: cover;">
+          <source src="assets/birthday-video.mp4" type="video/mp4">
+          Your browser does not support video playback.
+        </video>
+
+        <button class="play-overlay" id="playVideoBtn">
+          <span class="play-icon">▶</span>
+          <span>Tap to Play</span>
+        </button>
+      </div>
+
+      <p class="final-line">Once again… Happy Birthday, Dada Bhai ❤️</p>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
