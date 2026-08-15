@@ -494,3 +494,67 @@ button {
     object-fit: contain !important;
   }
 }
+/* ===============================
+   MOBILE PHOTO FIX
+================================ */
+
+@media (max-width: 600px) {
+
+  #photo-screen {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    display: none;
+    background: #000;
+  }
+
+  #photo-screen.active {
+    display: block !important;
+  }
+
+  .photo-card {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    transform: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: #000;
+  }
+
+  .photo-card img {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 1;
+  }
+
+  .photo-overlay {
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 2;
+  }
+
+  .photo-caption {
+    z-index: 5 !important;
+    bottom: 95px !important;
+  }
+
+  #nextToVideo {
+    z-index: 20 !important;
+    bottom: 20px !important;
+  }
+}
