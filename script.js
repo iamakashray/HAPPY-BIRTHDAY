@@ -183,112 +183,22 @@ introVideo.addEventListener("error", () => {
 
 });
 
-
 // ==============================
-// PHOTO → FINAL VIDEO
-// ==============================
-
-document
-  .getElementById("nextToVideo")
-  .addEventListener("click", () => {
-
-    // Stop music
-    photoMusic.pause();
-    photoMusic.currentTime = 0;
-
-    // Stop celebration
-    stopCelebration();
-
-    // Show final video
-    showScreen("video-screen");
-
-  });
-
-
-// ==============================
-// FINAL BIRTHDAY VIDEO
+// PHOTO → FINAL MESSAGE
 // ==============================
 
-const video =
-  document.getElementById("birthdayVideo");
+const nextToVideo = document.getElementById("nextToVideo");
 
-const playButton =
-  document.getElementById("playVideoBtn");
+nextToVideo.addEventListener("click", () => {
 
+  // Stop photo music
+  photoMusic.pause();
+  photoMusic.currentTime = 0;
 
-// Play button
-playButton.addEventListener("click", async () => {
+  // Stop celebration
+  stopCelebration();
 
-  try {
-
-    await video.play();
-
-    playButton.classList.add("hidden");
-
-  } catch (error) {
-
-    video.controls = true;
-
-  }
-
-});
-
-
-// Video starts
-video.addEventListener("play", () => {
-
-  playButton.classList.add("hidden");
-
-  const heading =
-    document.querySelector(".video-heading");
-
-  const finalLine =
-    document.querySelector(".final-line");
-
-
-  if (heading) {
-    heading.classList.add("video-text-hidden");
-  }
-
-  if (finalLine) {
-    finalLine.classList.add("video-text-hidden");
-  }
-
-});
-
-
-// Video pauses
-video.addEventListener("pause", () => {
-
-  if (!video.ended) {
-    playButton.classList.remove("hidden");
-  }
-
-});
-
-
-// Video ends
-video.addEventListener("ended", () => {
-
-  playButton.classList.remove("hidden");
-
-  playButton.querySelector("span:last-child").textContent =
-    "Play Again";
-
-
-  const heading =
-    document.querySelector(".video-heading");
-
-  const finalLine =
-    document.querySelector(".final-line");
-
-
-  if (heading) {
-    heading.classList.remove("video-text-hidden");
-  }
-
-  if (finalLine) {
-    finalLine.classList.remove("video-text-hidden");
-  }
+  // Show final message directly
+  showScreen("final-screen");
 
 });
