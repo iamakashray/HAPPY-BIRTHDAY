@@ -1,140 +1,294 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday Dada Bhai ❤️</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Great+Vibes&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+const screens = document.querySelectorAll(".screen");
 
-  <main class="app">
+function showScreen(id) {
+  screens.forEach(screen => {
+    screen.classList.remove("active");
+  });
 
-    <!-- 1. Birthday Intro -->
-    <section class="screen active" id="intro">
-      <div class="intro-glow"></div>
-      <div class="stars"></div>
-
-      <p class="small-line">A little something for someone special</p>
-      <h1 class="birthday-title">
-        <span>Happy Birthday</span>
-        <strong>Dada Bhai</strong>
-      </h1>
-
-      <button class="primary-btn" id="startBtn">Open My Surprise ✨</button>
-    </section>
-
-    <!-- 2. Letter Cover -->
-    <section class="screen" id="letter-cover">
-      <div class="letter-icon">💌</div>
-      <p class="eyebrow">A letter for you</p>
-      <h2>Open Letter</h2>
-      <p class="hint">There are a few words here that I really wanted you to read.</p>
-      <button class="primary-btn" id="openLetterBtn">Open Letter</button>
-    </section>
-
-    <!-- 3. Letter -->
-    <section class="screen" id="letter">
-      <div class="paper">
-        <div class="paper-top">To My Dada Bhai,</div>
-
-        <p>
-          Happy Birthday to one of the most special people in my life.
-          You are not just my dada bhai—you are someone I can look up to,
-          trust, and always count on.
-        </p>
-
-        <p>
-          Thank you for the laughs, the advice, the support, and all those
-          little moments that become beautiful memories without us even noticing.
-        </p>
-
-        <p>
-          I hope this new year of your life brings you happiness, success,
-          peace, and countless reasons to smile. Keep being the amazing person
-          you are.
-        </p>
-
-        <p class="signature">
-          Stay happy. Stay strong. Stay the same.<br>
-          <span>Happy Birthday, Dada Bhai ❤️</span>
-        </p>
-      </div>
-
-      <button class="next-btn" id="nextToIntroVideo">Next →</button>
-    </section>
-
-    <!-- 4. Intro Video -->
-    <section class="screen intro-video-screen" id="intro-video-screen">
-      <video id="introVideo" class="intro-video" playsinline preload="auto">
-        <source src="intro-video.mp4" type="video/mp4">
-        Your browser does not support video playback.
-      </video>
-
-      <div class="intro-transition"></div>
-    </section>
+  document.getElementById(id).classList.add("active");
+}
 
 
-    <!-- 5. Photo -->
-    <section class="screen" id="photo-screen">
+// ==============================
+// START SCREEN
+// ==============================
 
-  <div id="celebration-container"></div>
+document.getElementById("startBtn").addEventListener("click", () => {
+  showScreen("letter-cover");
+});
 
-  <div class="photo-card">
-    <img id="birthdayPhoto"
-         src="dada-bhai-photo.jpg"
-         alt="Dada Bhai">
 
-    <div class="photo-overlay"></div>
+// ==============================
+// LETTER
+// ==============================
 
-    <div class="photo-caption">
-      <span>Happy Birthday</span>
-      <strong>Dada Bhai</strong>
-    </div>
-  </div>
+document.getElementById("openLetterBtn").addEventListener("click", () => {
+  showScreen("letter");
+});
 
-  <button class="next-btn" id="nextToVideo">
-    Next →
-  </button>
 
-</section>
+// ==============================
+// INTRO VIDEO
+// ==============================
 
-<audio id="photoMusic" preload="auto">
-  <source src="photo-music.mp3" type="audio/mpeg">
-</audio>
+const introVideo = document.getElementById("introVideo");
+const introVideoScreen = document.getElementById("intro-video-screen");
 
-<!-- Background Music for Photo -->
-<audio id="photoMusic" preload="auto">
-  <source src="photo-music.mp3" type="audio/mpeg">
-</audio>
 
-    <!-- 6. Video -->
-    <section class="screen" id="video-screen">
-      <div class="video-heading">
-        <p class="eyebrow">And finally...</p>
-        <h2>A little surprise for you 🎬</h2>
-      </div>
+// ==============================
+// PHOTO MUSIC
+// ==============================
 
-      <div class="video-card" id="videoCard">
-        <video id="birthdayVideo" controls playsinline preload="metadata" style="object-fit: cover;">
-          <source src="birthday-video.mp4" type="video/mp4">
-          Your browser does not support video playback.
-        </video>
+const photoMusic = document.getElementById("photoMusic");
 
-        <button class="play-overlay" id="playVideoBtn">
-          <span class="play-icon">▶</span>
-          <span>Tap to Play</span>
-        </button>
-      </div>
 
-      <p class="final-line">Once again… Happy Birthday, Dada Bhai ❤️</p>
-    </section>
+// ==============================
+// CELEBRATION
+// ==============================
 
-  </main>
+const celebrationContainer =
+  document.getElementById("celebration-container");
 
-  <script src="script.js"></script>
-</body>
-</html>
+let celebrationInterval = null;
+
+
+function createCelebration() {
+
+  for (let i = 0; i < 80; i++) {
+
+    const confetti = document.createElement("div");
+
+    confetti.className = "confetti";
+
+    confetti.style.left =
+      Math.random() * 100 + "%";
+
+    confetti.style.background =
+      `hsl(${Math.random() * 360}, 100%, 65%)`;
+
+    confetti.style.animationDelay =
+      Math.random() * 0.8 + "s";
+
+    confetti.style.animationDuration =
+      2.5 + Math.random() * 2 + "s";
+
+    celebrationContainer.appendChild(confetti);
+
+    setTimeout(() => {
+      confetti.remove();
+    }, 5000);
+  }
+}
+
+
+function startCelebration() {
+
+  stopCelebration();
+
+  // First celebration immediately
+  createCelebration();
+
+  // Repeat every 7 seconds
+  celebrationInterval = setInterval(() => {
+    createCelebration();
+  }, 7000);
+}
+
+
+function stopCelebration() {
+
+  if (celebrationInterval !== null) {
+    clearInterval(celebrationInterval);
+    celebrationInterval = null;
+  }
+
+  celebrationContainer.innerHTML = "";
+}
+
+
+// ==============================
+// START INTRO VIDEO
+// ==============================
+
+async function startIntroVideo() {
+
+  showScreen("intro-video-screen");
+
+  introVideoScreen.classList.remove("transitioning");
+
+  try {
+
+    introVideo.currentTime = 0;
+
+    await introVideo.play();
+
+  } catch (error) {
+
+    setTimeout(goToPhoto, 700);
+
+  }
+}
+
+
+// ==============================
+// INTRO VIDEO → PHOTO
+// ==============================
+
+function goToPhoto() {
+
+  introVideoScreen.classList.add("transitioning");
+
+  setTimeout(() => {
+
+    introVideo.pause();
+
+    introVideo.currentTime = 0;
+
+    introVideoScreen.classList.remove("transitioning");
+
+
+    // Show photo
+    showScreen("photo-screen");
+
+
+    // Start background music
+    photoMusic.currentTime = 0;
+
+    photoMusic.play().catch(error => {
+      console.log("Music playback failed:", error);
+    });
+
+
+    // Start celebration
+    startCelebration();
+
+  }, 900);
+}
+
+
+// Letter → Intro Video
+document
+  .getElementById("nextToIntroVideo")
+  .addEventListener("click", startIntroVideo);
+
+
+// Intro Video → Photo
+introVideo.addEventListener("ended", goToPhoto);
+
+
+// Intro Video error → Photo
+introVideo.addEventListener("error", () => {
+
+  setTimeout(goToPhoto, 300);
+
+});
+
+
+// ==============================
+// PHOTO → FINAL VIDEO
+// ==============================
+
+document
+  .getElementById("nextToVideo")
+  .addEventListener("click", () => {
+
+    // Stop music
+    photoMusic.pause();
+    photoMusic.currentTime = 0;
+
+    // Stop celebration
+    stopCelebration();
+
+    // Show final video
+    showScreen("video-screen");
+
+  });
+
+
+// ==============================
+// FINAL BIRTHDAY VIDEO
+// ==============================
+
+const video =
+  document.getElementById("birthdayVideo");
+
+const playButton =
+  document.getElementById("playVideoBtn");
+
+
+// Play button
+playButton.addEventListener("click", async () => {
+
+  try {
+
+    await video.play();
+
+    playButton.classList.add("hidden");
+
+  } catch (error) {
+
+    video.controls = true;
+
+  }
+
+});
+
+
+// Video starts
+video.addEventListener("play", () => {
+
+  playButton.classList.add("hidden");
+
+  const heading =
+    document.querySelector(".video-heading");
+
+  const finalLine =
+    document.querySelector(".final-line");
+
+
+  if (heading) {
+    heading.classList.add("video-text-hidden");
+  }
+
+  if (finalLine) {
+    finalLine.classList.add("video-text-hidden");
+  }
+
+});
+
+
+// Video pauses
+video.addEventListener("pause", () => {
+
+  if (!video.ended) {
+    playButton.classList.remove("hidden");
+  }
+
+});
+
+
+// Video ends
+video.addEventListener("ended", () => {
+
+  playButton.classList.remove("hidden");
+
+  playButton.querySelector("span:last-child").textContent =
+    "Play Again";
+
+
+  const heading =
+    document.querySelector(".video-heading");
+
+  const finalLine =
+    document.querySelector(".final-line");
+
+
+  if (heading) {
+    heading.classList.remove("video-text-hidden");
+  }
+
+  if (finalLine) {
+    finalLine.classList.remove("video-text-hidden");
+  }
+
+});
