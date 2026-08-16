@@ -719,3 +719,248 @@ button {
   }
 
 }
+
+/* =========================================
+   MOBILE RESPONSIVE FIX
+   ========================================= */
+
+@media (max-width: 600px) {
+
+  /* ---------- GLOBAL ---------- */
+
+  html,
+  body {
+    width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
+  }
+
+  .app {
+    width: 100%;
+    min-height: 100svh;
+  }
+
+  .screen {
+    width: 100%;
+    min-height: 100svh;
+    padding: 20px 16px;
+    box-sizing: border-box;
+  }
+
+
+  /* =========================================
+     INTRO VIDEO
+     IMPORTANT: DON'T CROP VIDEO
+     ========================================= */
+
+  .intro-video-screen {
+    padding: 0;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .intro-video {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100svh;
+
+    object-fit: contain;
+    object-position: center;
+
+    display: block;
+  }
+
+
+  /* =========================================
+     PHOTO SCREEN
+     ========================================= */
+
+  #photo-screen {
+    padding: 18px 14px 85px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .photo-card {
+    width: min(92vw, 430px);
+    height: auto;
+    max-height: 72svh;
+
+    position: relative;
+    margin: 0 auto;
+
+    overflow: hidden;
+    border-radius: 18px;
+  }
+
+  .photo-card img {
+    width: 100%;
+    height: auto;
+    max-height: 72svh;
+
+    display: block;
+
+    object-fit: contain;
+    object-position: center;
+  }
+
+
+  /* ---------- PHOTO OVERLAY ---------- */
+
+  .photo-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+
+  /* =========================================
+     PHOTO CAPTION
+     ========================================= */
+
+  .photo-caption {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 22px;
+
+    width: 100%;
+    padding: 0 12px;
+
+    box-sizing: border-box;
+
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    z-index: 5;
+  }
+
+  .photo-caption span {
+    font-size: clamp(15px, 4vw, 20px);
+    line-height: 1.2;
+    margin-bottom: 3px;
+  }
+
+  .photo-caption strong {
+    font-size: clamp(27px, 8vw, 42px);
+    line-height: 1.05;
+
+    white-space: nowrap;
+
+    max-width: 100%;
+  }
+
+
+  /* =========================================
+     NEXT BUTTON
+     ========================================= */
+
+  #photo-screen .next-btn {
+    position: absolute;
+
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    z-index: 20;
+
+    width: auto;
+    min-width: 120px;
+
+    padding: 11px 22px;
+
+    font-size: 14px;
+  }
+
+
+  /* =========================================
+     CELEBRATION / CONFETTI
+     ========================================= */
+
+  #celebration-container {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+    pointer-events: none;
+
+    z-index: 10;
+  }
+
+
+  /* =========================================
+     FINAL MESSAGE
+     ========================================= */
+
+  #final-screen {
+    padding: 30px 20px;
+
+    min-height: 100svh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+  }
+
+  .final-message {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .final-eyebrow {
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  .message-lines {
+    width: 100%;
+  }
+
+  .message-line {
+    font-size: clamp(17px, 5vw, 24px);
+    line-height: 1.45;
+
+    margin: 0 auto 10px;
+
+    max-width: 340px;
+  }
+
+  .final-birthday {
+    margin-top: 28px;
+  }
+
+  .final-birthday span {
+    display: block;
+    font-size: clamp(17px, 5vw, 24px);
+    margin-bottom: 4px;
+  }
+
+  .final-birthday strong {
+    display: block;
+    font-size: clamp(32px, 10vw, 50px);
+    line-height: 1.05;
+  }
+
+  .final-signature {
+    margin-top: 28px;
+    font-size: 12px;
+  }
+
+}
