@@ -345,3 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
   showScreen("intro");
 
 });
+console.log("NEW SCRIPT LOADED");
+console.log("Active screen:", document.querySelector(".screen.active")?.id);
+
+showScreen("intro");
