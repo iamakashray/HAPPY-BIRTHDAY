@@ -1,297 +1,345 @@
-// ==========================================
-// SCREEN MANAGEMENT
-// ==========================================
+document.addEventListener("DOMContentLoaded", () => {
 
-const screens = document.querySelectorAll(".screen");
+  // ==========================================
+  // SCREEN MANAGEMENT
+  // ==========================================
 
-function showScreen(id) {
-  screens.forEach(screen => {
-    screen.classList.remove("active");
-  });
+  const screens = document.querySelectorAll(".screen");
 
-  const targetScreen = document.getElementById(id);
+  function showScreen(id) {
 
-  if (targetScreen) {
-    targetScreen.classList.add("active");
-  } else {
-    console.error(`Screen not found: ${id}`);
+    screens.forEach(screen => {
+      screen.classList.remove("active");
+    });
+
+    const target = document.getElementById(id);
+
+    if (target) {
+      target.classList.add("active");
+    } else {
+      console.error("Screen not found:", id);
+    }
   }
-}
 
 
-// ==========================================
-// START SCREEN → LETTER COVER
-// ==========================================
+  // ==========================================
+  // ELEMENTS
+  // ==========================================
 
-const startBtn = document.getElementById("startBtn");
+  const startBtn =
+    document.getElementById("startBtn");
 
-if (startBtn) {
-  startBtn.addEventListener("click", () => {
+  const openLetterBtn =
+    document.getElementById("openLetterBtn");
+
+  const nextToIntroVideo =
+    document.getElementById("nextToIntroVideo");
+
+  const nextToVideo =
+    document.getElementById("nextToVideo");
+
+  const introVideo =
+    document.getElementById("introVideo");
+
+  const introVideoScreen =
+    document.getElementById("intro-video-screen");
+
+  const photoMusic =
+    document.getElementById("photoMusic");
+
+  const celebrationContainer =
+    document.getElementById("celebration-container");
+
+
+  // ==========================================
+  // START SCREEN
+  // ==========================================
+
+  startBtn?.addEventListener("click", () => {
+
     showScreen("letter-cover");
+
   });
-}
 
 
-// ==========================================
-// LETTER COVER → LETTER
-// ==========================================
+  // ==========================================
+  // LETTER COVER → LETTER
+  // ==========================================
 
-const openLetterBtn = document.getElementById("openLetterBtn");
+  openLetterBtn?.addEventListener("click", () => {
 
-if (openLetterBtn) {
-  openLetterBtn.addEventListener("click", () => {
     showScreen("letter");
+
   });
-}
 
 
-// ==========================================
-// INTRO VIDEO
-// ==========================================
+  // ==========================================
+  // CELEBRATION
+  // ==========================================
 
-const introVideo = document.getElementById("introVideo");
-const introVideoScreen =
-  document.getElementById("intro-video-screen");
+  let celebrationInterval = null;
 
 
-// ==========================================
-// PHOTO MUSIC
-// ==========================================
+  function createCelebration() {
 
-const photoMusic = document.getElementById("photoMusic");
+    if (!celebrationContainer) return;
 
+    for (let i = 0; i < 80; i++) {
 
-// ==========================================
-// CELEBRATION / CONFETTI
-// ==========================================
+      const confetti =
+        document.createElement("div");
 
-const celebrationContainer =
-  document.getElementById("celebration-container");
+      confetti.className = "confetti";
 
-let celebrationInterval = null;
+      confetti.style.left =
+        Math.random() * 100 + "%";
 
+      confetti.style.background =
+        `hsl(${Math.random() * 360}, 100%, 65%)`;
 
-function createCelebration() {
+      confetti.style.animationDelay =
+        Math.random() * 0.8 + "s";
 
-  if (!celebrationContainer) return;
+      confetti.style.animationDuration =
+        2.5 + Math.random() * 2 + "s";
 
-  for (let i = 0; i < 80; i++) {
+      celebrationContainer.appendChild(confetti);
 
-    const confetti = document.createElement("div");
+      setTimeout(() => {
 
-    confetti.className = "confetti";
+        confetti.remove();
 
-    confetti.style.left =
-      Math.random() * 100 + "%";
+      }, 5000);
 
-    confetti.style.background =
-      `hsl(${Math.random() * 360}, 100%, 65%)`;
-
-    confetti.style.animationDelay =
-      Math.random() * 0.8 + "s";
-
-    confetti.style.animationDuration =
-      2.5 + Math.random() * 2 + "s";
-
-    celebrationContainer.appendChild(confetti);
-
-    setTimeout(() => {
-      confetti.remove();
-    }, 5000);
+    }
   }
-}
 
 
-function startCelebration() {
+  function startCelebration() {
 
-  stopCelebration();
+    stopCelebration();
 
-  // First celebration immediately
-  createCelebration();
-
-  // Repeat every 7 seconds
-  celebrationInterval = setInterval(() => {
     createCelebration();
-  }, 7000);
-}
 
+    celebrationInterval =
+      setInterval(() => {
 
-function stopCelebration() {
+        createCelebration();
 
-  if (celebrationInterval !== null) {
+      }, 7000);
 
-    clearInterval(celebrationInterval);
-
-    celebrationInterval = null;
   }
 
-  if (celebrationContainer) {
-    celebrationContainer.innerHTML = "";
-  }
-}
 
+  function stopCelebration() {
 
-// ==========================================
-// START INTRO VIDEO
-// ==========================================
+    if (celebrationInterval !== null) {
 
-async function startIntroVideo() {
+      clearInterval(celebrationInterval);
 
-  showScreen("intro-video-screen");
+      celebrationInterval = null;
+    }
 
-  if (introVideoScreen) {
-    introVideoScreen.classList.remove("transitioning");
-  }
+    if (celebrationContainer) {
 
-  if (!introVideo) {
-    console.error("Intro video not found.");
-    goToPhoto();
-    return;
+      celebrationContainer.innerHTML = "";
+
+    }
   }
 
-  try {
+
+  // ==========================================
+  // INTRO VIDEO
+  // ==========================================
+
+  function startIntroVideo() {
+
+    showScreen("intro-video-screen");
+
+    if (introVideoScreen) {
+
+      introVideoScreen.classList.remove(
+        "transitioning"
+      );
+
+    }
+
+    if (!introVideo) {
+
+      console.error("introVideo not found");
+
+      goToPhoto();
+
+      return;
+    }
 
     introVideo.currentTime = 0;
 
-    await introVideo.play();
+    const playPromise =
+      introVideo.play();
 
-  } catch (error) {
+    if (playPromise !== undefined) {
 
-    console.log("Intro video autoplay failed:", error);
+      playPromise.catch(error => {
 
-    // If video cannot play, go to photo automatically
-    setTimeout(goToPhoto, 700);
-  }
-}
+        console.log(
+          "Video autoplay failed:",
+          error
+        );
 
+        setTimeout(
+          goToPhoto,
+          700
+        );
 
-// ==========================================
-// INTRO VIDEO → PHOTO
-// ==========================================
+      });
 
-function goToPhoto() {
-
-  if (!introVideoScreen) {
-    showPhotoScreen();
-    return;
-  }
-
-  // Prevent multiple transitions
-  if (introVideoScreen.classList.contains("transitioning")) {
-    return;
+    }
   }
 
-  introVideoScreen.classList.add("transitioning");
 
-  setTimeout(() => {
+  // ==========================================
+  // INTRO VIDEO → PHOTO
+  // ==========================================
 
-    if (introVideo) {
-      introVideo.pause();
-      introVideo.currentTime = 0;
+  function goToPhoto() {
+
+    if (
+      introVideoScreen &&
+      !introVideoScreen.classList.contains(
+        "transitioning"
+      )
+    ) {
+
+      introVideoScreen.classList.add(
+        "transitioning"
+      );
+
+      setTimeout(() => {
+
+        if (introVideo) {
+
+          introVideo.pause();
+
+          introVideo.currentTime = 0;
+
+        }
+
+        introVideoScreen.classList.remove(
+          "transitioning"
+        );
+
+        showPhoto();
+
+      }, 900);
+
+    } else {
+
+      showPhoto();
+
+    }
+  }
+
+
+  // ==========================================
+  // SHOW PHOTO
+  // ==========================================
+
+  function showPhoto() {
+
+    showScreen("photo-screen");
+
+    // Music
+    if (photoMusic) {
+
+      photoMusic.currentTime = 0;
+
+      photoMusic.play().catch(error => {
+
+        console.log(
+          "Music playback failed:",
+          error
+        );
+
+      });
+
     }
 
-    introVideoScreen.classList.remove("transitioning");
+    // Confetti
+    startCelebration();
 
-    showPhotoScreen();
-
-  }, 900);
-}
-
-
-// ==========================================
-// SHOW PHOTO
-// ==========================================
-
-function showPhotoScreen() {
-
-  // Show photo
-  showScreen("photo-screen");
-
-  // Start background music
-  if (photoMusic) {
-
-    photoMusic.currentTime = 0;
-
-    photoMusic.play().catch(error => {
-      console.log("Photo music playback failed:", error);
-    });
   }
 
-  // Start celebration
-  startCelebration();
-}
 
+  // ==========================================
+  // LETTER → INTRO VIDEO
+  // ==========================================
 
-// ==========================================
-// LETTER → INTRO VIDEO
-// ==========================================
-
-const nextToIntroVideo =
-  document.getElementById("nextToIntroVideo");
-
-if (nextToIntroVideo) {
-
-  nextToIntroVideo.addEventListener(
+  nextToIntroVideo?.addEventListener(
     "click",
     startIntroVideo
   );
-}
 
 
-// ==========================================
-// INTRO VIDEO → PHOTO
-// ==========================================
+  // ==========================================
+  // INTRO VIDEO EVENTS
+  // ==========================================
 
-if (introVideo) {
-
-  introVideo.addEventListener(
+  introVideo?.addEventListener(
     "ended",
     goToPhoto
   );
 
-  introVideo.addEventListener(
+
+  introVideo?.addEventListener(
     "error",
     () => {
 
-      console.log("Intro video error.");
+      console.log(
+        "Intro video error"
+      );
 
-      setTimeout(goToPhoto, 300);
+      setTimeout(
+        goToPhoto,
+        300
+      );
+
     }
   );
-}
 
 
-// ==========================================
-// PHOTO → FINAL MESSAGE
-// ==========================================
+  // ==========================================
+  // PHOTO → FINAL MESSAGE
+  // ==========================================
 
-const nextToVideo =
-  document.getElementById("nextToVideo");
+  nextToVideo?.addEventListener(
+    "click",
+    () => {
 
-if (nextToVideo) {
+      // Stop music
+      if (photoMusic) {
 
-  nextToVideo.addEventListener("click", () => {
+        photoMusic.pause();
 
-    // Stop photo music
-    if (photoMusic) {
+        photoMusic.currentTime = 0;
 
-      photoMusic.pause();
-      photoMusic.currentTime = 0;
+      }
+
+      // Stop confetti
+      stopCelebration();
+
+      // Directly show final message
+      showScreen("final-screen");
+
     }
-
-    // Stop celebration
-    stopCelebration();
-
-    // Directly show final message
-    showScreen("final-screen");
-
-  });
-}
+  );
 
 
-// ==========================================
-// SAFETY CHECK
-// ==========================================
+  // ==========================================
+  // IMPORTANT:
+  // START ONLY WITH INTRO SCREEN
+  // ==========================================
 
-// Make sure the page always starts from intro
-showScreen("intro");
+  showScreen("intro");
+
+});
