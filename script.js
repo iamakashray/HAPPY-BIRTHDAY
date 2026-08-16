@@ -1,14 +1,8 @@
-document.addEventListener("DOMContentLoaded", () => {
-document.addEventListener("DOMContentLoaded", () => {
-
-  // ==========================================
-  // SCREEN MANAGEMENT
-  // ==========================================
+document.addEventListener("DOMContentLoaded", function () {
 
   const screens = document.querySelectorAll(".screen");
 
   function showScreen(id) {
-
     screens.forEach(screen => {
       screen.classList.remove("active");
     });
@@ -17,33 +11,52 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (target) {
       target.classList.add("active");
-    } else {
-      console.error("Screen not found:", id);
     }
   }
 
 
-  // ==========================================
-  // ELEMENTS
-  // ==========================================
+  // =========================
+  // INTRO → LETTER COVER
+  // =========================
 
-  const startBtn =
-    document.getElementById("startBtn");
+  const startBtn = document.getElementById("startBtn");
+
+  if (startBtn) {
+    startBtn.addEventListener("click", function () {
+      showScreen("letter-cover");
+    });
+  }
+
+
+  // =========================
+  // LETTER COVER → LETTER
+  // =========================
 
   const openLetterBtn =
     document.getElementById("openLetterBtn");
 
+  if (openLetterBtn) {
+    openLetterBtn.addEventListener("click", function () {
+      showScreen("letter");
+    });
+  }
+
+
+  // =========================
+  // ELEMENTS
+  // =========================
+
   const nextToIntroVideo =
     document.getElementById("nextToIntroVideo");
-
-  const nextToVideo =
-    document.getElementById("nextToVideo");
 
   const introVideo =
     document.getElementById("introVideo");
 
   const introVideoScreen =
     document.getElementById("intro-video-screen");
+
+  const nextToVideo =
+    document.getElementById("nextToVideo");
 
   const photoMusic =
     document.getElementById("photoMusic");
@@ -52,31 +65,95 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("celebration-container");
 
 
-  // ==========================================
-  // START SCREEN
-  // ==========================================
+  // =========================
+  // LETTER → INTRO VIDEO
+  // =========================
 
-  startBtn?.addEventListener("click", () => {
+  if (nextToIntroVideo) {
 
-    showScreen("letter-cover");
+    nextToIntroVideo.addEventListener("click", function () {
 
-  });
+      showScreen("intro-video-screen");
+
+      if (introVideo) {
+
+        introVideo.currentTime = 0;
+
+        introVideo.play().catch(function () {
+
+          // If video cannot autoplay,
+          // go directly to photo
+          setTimeout(goToPhoto, 700);
+
+        });
+
+      } else {
+
+        goToPhoto();
+
+      }
+
+    });
+
+  }
 
 
-  // ==========================================
-  // LETTER COVER → LETTER
-  // ==========================================
+  // =========================
+  // VIDEO → PHOTO
+  // =========================
 
-  openLetterBtn?.addEventListener("click", () => {
+  function goToPhoto() {
 
-    showScreen("letter");
+    if (introVideoScreen) {
+      introVideoScreen.classList.add("transitioning");
+    }
 
-  });
+    setTimeout(function () {
+
+      if (introVideo) {
+        introVideo.pause();
+        introVideo.currentTime = 0;
+      }
+
+      showScreen("photo-screen");
+
+      if (photoMusic) {
+
+        photoMusic.currentTime = 0;
+
+        photoMusic.play().catch(function (error) {
+          console.log("Music blocked:", error);
+        });
+
+      }
+
+      startCelebration();
+
+    }, 900);
+
+  }
 
 
-  // ==========================================
-  // CELEBRATION
-  // ==========================================
+  // =========================
+  // VIDEO EVENTS
+  // =========================
+
+  if (introVideo) {
+
+    introVideo.addEventListener("ended", goToPhoto);
+
+    introVideo.addEventListener("error", function () {
+
+      setTimeout(goToPhoto, 300);
+
+    });
+
+  }
+
+
+  // =========================
+  // CONFETTI
+  // =========================
 
   let celebrationInterval = null;
 
@@ -106,13 +183,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       celebrationContainer.appendChild(confetti);
 
-      setTimeout(() => {
-
+      setTimeout(function () {
         confetti.remove();
-
       }, 5000);
 
     }
+
   }
 
 
@@ -123,11 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
     createCelebration();
 
     celebrationInterval =
-      setInterval(() => {
-
-        createCelebration();
-
-      }, 7000);
+      setInterval(createCelebration, 7000);
 
   }
 
@@ -139,213 +211,44 @@ document.addEventListener("DOMContentLoaded", () => {
       clearInterval(celebrationInterval);
 
       celebrationInterval = null;
+
     }
 
     if (celebrationContainer) {
-
       celebrationContainer.innerHTML = "";
-
     }
-  }
-
-
-  // ==========================================
-  // INTRO VIDEO
-  // ==========================================
-
-  function startIntroVideo() {
-
-    showScreen("intro-video-screen");
-
-    if (introVideoScreen) {
-
-      introVideoScreen.classList.remove(
-        "transitioning"
-      );
-
-    }
-
-    if (!introVideo) {
-
-      console.error("introVideo not found");
-
-      goToPhoto();
-
-      return;
-    }
-
-    introVideo.currentTime = 0;
-
-    const playPromise =
-      introVideo.play();
-
-    if (playPromise !== undefined) {
-
-      playPromise.catch(error => {
-
-        console.log(
-          "Video autoplay failed:",
-          error
-        );
-
-        setTimeout(
-          goToPhoto,
-          700
-        );
-
-      });
-
-    }
-  }
-
-
-  // ==========================================
-  // INTRO VIDEO → PHOTO
-  // ==========================================
-
-  function goToPhoto() {
-
-    if (
-      introVideoScreen &&
-      !introVideoScreen.classList.contains(
-        "transitioning"
-      )
-    ) {
-
-      introVideoScreen.classList.add(
-        "transitioning"
-      );
-
-      setTimeout(() => {
-
-        if (introVideo) {
-
-          introVideo.pause();
-
-          introVideo.currentTime = 0;
-
-        }
-
-        introVideoScreen.classList.remove(
-          "transitioning"
-        );
-
-        showPhoto();
-
-      }, 900);
-
-    } else {
-
-      showPhoto();
-
-    }
-  }
-
-
-  // ==========================================
-  // SHOW PHOTO
-  // ==========================================
-
-  function showPhoto() {
-
-    showScreen("photo-screen");
-
-    // Music
-    if (photoMusic) {
-
-      photoMusic.currentTime = 0;
-
-      photoMusic.play().catch(error => {
-
-        console.log(
-          "Music playback failed:",
-          error
-        );
-
-      });
-
-    }
-
-    // Confetti
-    startCelebration();
 
   }
 
 
-  // ==========================================
-  // LETTER → INTRO VIDEO
-  // ==========================================
-
-  nextToIntroVideo?.addEventListener(
-    "click",
-    startIntroVideo
-  );
-
-
-  // ==========================================
-  // INTRO VIDEO EVENTS
-  // ==========================================
-
-  introVideo?.addEventListener(
-    "ended",
-    goToPhoto
-  );
-
-
-  introVideo?.addEventListener(
-    "error",
-    () => {
-
-      console.log(
-        "Intro video error"
-      );
-
-      setTimeout(
-        goToPhoto,
-        300
-      );
-
-    }
-  );
-
-
-  // ==========================================
+  // =========================
   // PHOTO → FINAL MESSAGE
-  // ==========================================
+  // =========================
 
-  nextToVideo?.addEventListener(
-    "click",
-    () => {
+  if (nextToVideo) {
 
-      // Stop music
+    nextToVideo.addEventListener("click", function () {
+
       if (photoMusic) {
 
         photoMusic.pause();
-
         photoMusic.currentTime = 0;
 
       }
 
-      // Stop confetti
       stopCelebration();
 
-      // Directly show final message
       showScreen("final-screen");
 
-    }
-  );
+    });
+
+  }
 
 
-  // ==========================================
-  // IMPORTANT:
-  // START ONLY WITH INTRO SCREEN
-  });
-  // ==========================================
+  // =========================
+  // FORCE INITIAL SCREEN
+  // =========================
 
   showScreen("intro");
 
 });
-console.log("NEW SCRIPT LOADED");
-console.log("Active screen:", document.querySelector(".screen.active")?.id);
-
-showScreen("intro");
