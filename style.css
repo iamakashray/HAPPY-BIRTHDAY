@@ -964,3 +964,349 @@ button {
   }
 
 }
+/* =========================================
+   FINAL MOBILE FIX — DO NOT CROP
+   ========================================= */
+
+@media screen and (max-width: 600px) {
+
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    overflow: hidden;
+  }
+
+  .app {
+    width: 100%;
+    height: 100dvh;
+    min-height: 100dvh;
+  }
+
+  .screen {
+    width: 100%;
+    height: 100dvh;
+    min-height: 100dvh;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+
+  /* =====================================
+     INTRO VIDEO
+     FULL VIDEO — NO ZOOM / NO CROP
+     ===================================== */
+
+  .intro-video-screen {
+    width: 100%;
+    height: 100dvh;
+    padding: 0 !important;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden !important;
+  }
+
+  .intro-video-screen .intro-video {
+    position: relative !important;
+
+    inset: auto !important;
+
+    width: 100% !important;
+    height: auto !important;
+
+    max-width: 100% !important;
+    max-height: 100dvh !important;
+
+    object-fit: contain !important;
+    object-position: center center !important;
+
+    transform: none !important;
+
+    display: block;
+  }
+
+
+  /* =====================================
+     PHOTO SCREEN
+     ===================================== */
+
+  #photo-screen {
+    width: 100%;
+    height: 100dvh;
+
+    padding: 0 !important;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #000;
+
+    overflow: hidden !important;
+  }
+
+
+  /* =====================================
+     PHOTO CARD
+     ===================================== */
+
+  #photo-screen .photo-card {
+    position: absolute !important;
+
+    inset: 0 !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    border-radius: 0 !important;
+
+    overflow: hidden !important;
+
+    background: #000;
+
+    z-index: 1;
+  }
+
+
+  /* =====================================
+     PHOTO
+     FULL PHOTO — NO CROP
+     ===================================== */
+
+  #photo-screen .photo-card img {
+    position: absolute !important;
+
+    inset: 0 !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    max-width: none !important;
+    max-height: none !important;
+
+    display: block;
+
+    object-fit: contain !important;
+    object-position: center center !important;
+
+    background: #000;
+  }
+
+
+  /* =====================================
+     PHOTO OVERLAY
+     ===================================== */
+
+  #photo-screen .photo-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 2;
+
+    pointer-events: none;
+  }
+
+
+  /* =====================================
+     BIRTHDAY TEXT
+     ===================================== */
+
+  #photo-screen .photo-caption {
+
+    position: absolute !important;
+
+    left: 0 !important;
+    right: 0 !important;
+
+    bottom: 75px !important;
+
+    width: 100% !important;
+
+    padding: 0 20px !important;
+
+    margin: 0 !important;
+
+    text-align: center !important;
+
+    display: flex !important;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 5;
+
+    box-sizing: border-box;
+  }
+
+
+  #photo-screen .photo-caption span {
+
+    display: block;
+
+    font-size: clamp(14px, 4vw, 18px) !important;
+
+    line-height: 1.2;
+
+    color: rgba(255,255,255,.9);
+
+    margin: 0 0 5px 0 !important;
+
+    white-space: nowrap;
+  }
+
+
+  #photo-screen .photo-caption strong {
+
+    display: block;
+
+    margin: 0 !important;
+
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: clamp(38px, 11vw, 58px) !important;
+
+    line-height: 1 !important;
+
+    font-weight: 600;
+
+    color: #fff;
+
+    white-space: nowrap;
+
+    max-width: 100%;
+
+    text-shadow:
+      0 2px 15px rgba(0,0,0,.8),
+      0 0 20px rgba(255,121,169,.35);
+  }
+
+
+  /* =====================================
+     NEXT BUTTON
+     ===================================== */
+
+  #photo-screen .next-btn {
+
+    position: absolute !important;
+
+    left: 50% !important;
+    bottom: 18px !important;
+
+    transform: translateX(-50%) !important;
+
+    margin: 0 !important;
+
+    z-index: 100002;
+
+    padding: 11px 23px;
+
+    min-width: 115px;
+
+    font-size: 14px;
+  }
+
+
+  /* =====================================
+     CONFETTI
+     ===================================== */
+
+  #photo-screen #celebration-container {
+
+    position: absolute !important;
+
+    inset: 0 !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    z-index: 100000;
+
+    pointer-events: none;
+  }
+
+
+  /* =====================================
+     FINAL MESSAGE — MOBILE
+     ===================================== */
+
+  #final-screen {
+
+    width: 100%;
+    height: 100dvh;
+
+    padding: 25px 18px !important;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden !important;
+  }
+
+  #final-screen .final-message {
+
+    width: 100% !important;
+
+    max-width: 370px;
+
+    margin: 0 auto;
+
+    text-align: center;
+  }
+
+  #final-screen .final-eyebrow {
+
+    font-size: 11px;
+
+    letter-spacing: .18em;
+
+    margin-bottom: 24px;
+  }
+
+  #final-screen .message-line {
+
+    font-size: clamp(17px, 5vw, 22px) !important;
+
+    line-height: 1.4;
+
+    margin: 7px auto;
+
+    max-width: 340px;
+  }
+
+  #final-screen .final-birthday {
+
+    margin-top: 28px;
+  }
+
+  #final-screen .final-birthday span {
+
+    font-size: 13px;
+  }
+
+  #final-screen .final-birthday strong {
+
+    font-size: clamp(38px, 12vw, 55px) !important;
+
+    line-height: 1;
+  }
+
+  #final-screen .final-signature {
+
+    margin-top: 25px;
+
+    font-size: 11px;
+  }
+
+}
