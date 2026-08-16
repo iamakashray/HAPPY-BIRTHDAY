@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
 
   // ==========================================
   // SCREEN MANAGEMENT
@@ -338,6 +339,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==========================================
   // IMPORTANT:
   // START ONLY WITH INTRO SCREEN
+  });
   // ==========================================
 
   showScreen("intro");
