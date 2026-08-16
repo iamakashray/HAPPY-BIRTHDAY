@@ -1,3 +1,7 @@
+// ==========================================
+// SCREEN MANAGEMENT
+// ==========================================
+
 const screens = document.querySelectorAll(".screen");
 
 function showScreen(id) {
@@ -5,46 +9,61 @@ function showScreen(id) {
     screen.classList.remove("active");
   });
 
-  document.getElementById(id).classList.add("active");
+  const targetScreen = document.getElementById(id);
+
+  if (targetScreen) {
+    targetScreen.classList.add("active");
+  } else {
+    console.error(`Screen not found: ${id}`);
+  }
 }
 
 
-// ==============================
-// START SCREEN
-// ==============================
+// ==========================================
+// START SCREEN → LETTER COVER
+// ==========================================
 
-document.getElementById("startBtn").addEventListener("click", () => {
-  showScreen("letter-cover");
-});
+const startBtn = document.getElementById("startBtn");
 
-
-// ==============================
-// LETTER
-// ==============================
-
-document.getElementById("openLetterBtn").addEventListener("click", () => {
-  showScreen("letter");
-});
+if (startBtn) {
+  startBtn.addEventListener("click", () => {
+    showScreen("letter-cover");
+  });
+}
 
 
-// ==============================
+// ==========================================
+// LETTER COVER → LETTER
+// ==========================================
+
+const openLetterBtn = document.getElementById("openLetterBtn");
+
+if (openLetterBtn) {
+  openLetterBtn.addEventListener("click", () => {
+    showScreen("letter");
+  });
+}
+
+
+// ==========================================
 // INTRO VIDEO
-// ==============================
+// ==========================================
 
 const introVideo = document.getElementById("introVideo");
-const introVideoScreen = document.getElementById("intro-video-screen");
+const introVideoScreen =
+  document.getElementById("intro-video-screen");
 
 
-// ==============================
+// ==========================================
 // PHOTO MUSIC
-// ==============================
+// ==========================================
 
 const photoMusic = document.getElementById("photoMusic");
 
 
-// ==============================
-// CELEBRATION
-// ==============================
+// ==========================================
+// CELEBRATION / CONFETTI
+// ==========================================
 
 const celebrationContainer =
   document.getElementById("celebration-container");
@@ -53,6 +72,8 @@ let celebrationInterval = null;
 
 
 function createCelebration() {
+
+  if (!celebrationContainer) return;
 
   for (let i = 0; i < 80; i++) {
 
@@ -98,23 +119,35 @@ function startCelebration() {
 function stopCelebration() {
 
   if (celebrationInterval !== null) {
+
     clearInterval(celebrationInterval);
+
     celebrationInterval = null;
   }
 
-  celebrationContainer.innerHTML = "";
+  if (celebrationContainer) {
+    celebrationContainer.innerHTML = "";
+  }
 }
 
 
-// ==============================
+// ==========================================
 // START INTRO VIDEO
-// ==============================
+// ==========================================
 
 async function startIntroVideo() {
 
   showScreen("intro-video-screen");
 
-  introVideoScreen.classList.remove("transitioning");
+  if (introVideoScreen) {
+    introVideoScreen.classList.remove("transitioning");
+  }
+
+  if (!introVideo) {
+    console.error("Intro video not found.");
+    goToPhoto();
+    return;
+  }
 
   try {
 
@@ -124,81 +157,141 @@ async function startIntroVideo() {
 
   } catch (error) {
 
-    setTimeout(goToPhoto, 700);
+    console.log("Intro video autoplay failed:", error);
 
+    // If video cannot play, go to photo automatically
+    setTimeout(goToPhoto, 700);
   }
 }
 
 
-// ==============================
+// ==========================================
 // INTRO VIDEO → PHOTO
-// ==============================
+// ==========================================
 
 function goToPhoto() {
+
+  if (!introVideoScreen) {
+    showPhotoScreen();
+    return;
+  }
+
+  // Prevent multiple transitions
+  if (introVideoScreen.classList.contains("transitioning")) {
+    return;
+  }
 
   introVideoScreen.classList.add("transitioning");
 
   setTimeout(() => {
 
-    introVideo.pause();
-
-    introVideo.currentTime = 0;
+    if (introVideo) {
+      introVideo.pause();
+      introVideo.currentTime = 0;
+    }
 
     introVideoScreen.classList.remove("transitioning");
 
-
-    // Show photo
-    showScreen("photo-screen");
-
-
-    // Start background music
-    photoMusic.currentTime = 0;
-
-    photoMusic.play().catch(error => {
-      console.log("Music playback failed:", error);
-    });
-
-
-    // Start celebration
-    startCelebration();
+    showPhotoScreen();
 
   }, 900);
 }
 
 
-// Letter → Intro Video
-document
-  .getElementById("nextToIntroVideo")
-  .addEventListener("click", startIntroVideo);
+// ==========================================
+// SHOW PHOTO
+// ==========================================
+
+function showPhotoScreen() {
+
+  // Show photo
+  showScreen("photo-screen");
+
+  // Start background music
+  if (photoMusic) {
+
+    photoMusic.currentTime = 0;
+
+    photoMusic.play().catch(error => {
+      console.log("Photo music playback failed:", error);
+    });
+  }
+
+  // Start celebration
+  startCelebration();
+}
 
 
-// Intro Video → Photo
-introVideo.addEventListener("ended", goToPhoto);
+// ==========================================
+// LETTER → INTRO VIDEO
+// ==========================================
+
+const nextToIntroVideo =
+  document.getElementById("nextToIntroVideo");
+
+if (nextToIntroVideo) {
+
+  nextToIntroVideo.addEventListener(
+    "click",
+    startIntroVideo
+  );
+}
 
 
-// Intro Video error → Photo
-introVideo.addEventListener("error", () => {
+// ==========================================
+// INTRO VIDEO → PHOTO
+// ==========================================
 
-  setTimeout(goToPhoto, 300);
+if (introVideo) {
 
-});
+  introVideo.addEventListener(
+    "ended",
+    goToPhoto
+  );
 
-// ==============================
+  introVideo.addEventListener(
+    "error",
+    () => {
+
+      console.log("Intro video error.");
+
+      setTimeout(goToPhoto, 300);
+    }
+  );
+}
+
+
+// ==========================================
 // PHOTO → FINAL MESSAGE
-// ==============================
+// ==========================================
 
-const nextToVideo = document.getElementById("nextToVideo");
+const nextToVideo =
+  document.getElementById("nextToVideo");
 
-nextToVideo.addEventListener("click", () => {
+if (nextToVideo) {
 
-  // Stop photo music
-  photoMusic.pause();
-  photoMusic.currentTime = 0;
+  nextToVideo.addEventListener("click", () => {
 
-  // Stop celebration
-  stopCelebration();
+    // Stop photo music
+    if (photoMusic) {
 
-  // Show final message directly
-  showScreen("final-screen");
+      photoMusic.pause();
+      photoMusic.currentTime = 0;
+    }
 
-});
+    // Stop celebration
+    stopCelebration();
+
+    // Directly show final message
+    showScreen("final-screen");
+
+  });
+}
+
+
+// ==========================================
+// SAFETY CHECK
+// ==========================================
+
+// Make sure the page always starts from intro
+showScreen("intro");
