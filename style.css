@@ -319,8 +319,7 @@ button {
 }
 
 .photo-caption span {
-  font-size: 3%;
-  color: rgba(255,255,255,.82);
+  font-size: 18px;
 }
 
 .photo-caption strong {
