@@ -231,14 +231,22 @@ button {
   overflow: hidden;
 }
 
+
 .intro-video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
   display: block;
   background: #000;
+  object-fit: cover;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .intro-video {
+    object-fit: contain;
+  }
 }
 
 .intro-transition {
