@@ -80,17 +80,31 @@
 
     <!-- 5. Photo -->
     <section class="screen" id="photo-screen">
-      <div class="photo-card">
-        <img id="birthdayPhoto" src="dada-bhai-photo.jpg" alt="Dada Bhai">
-        <div class="photo-overlay"></div>
-        <div class="photo-caption">
-          <span>Happy Birthday</span>
-          <strong>Dada Bhai</strong>
-        </div>
-      </div>
 
-      <button class="next-btn" id="nextToVideo">Next →</button>
-    </section>
+  <div id="celebration-container"></div>
+
+  <div class="photo-card">
+    <img id="birthdayPhoto"
+         src="dada-bhai-photo.jpg"
+         alt="Dada Bhai">
+
+    <div class="photo-overlay"></div>
+
+    <div class="photo-caption">
+      <span>Happy Birthday</span>
+      <strong>Dada Bhai</strong>
+    </div>
+  </div>
+
+  <button class="next-btn" id="nextToVideo">
+    Next →
+  </button>
+
+</section>
+
+<audio id="photoMusic" preload="auto">
+  <source src="photo-music.mp3" type="audio/mpeg">
+</audio>
 
 <!-- Background Music for Photo -->
 <audio id="photoMusic" preload="auto">
