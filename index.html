@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Great+Vibes&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
 
@@ -100,47 +101,69 @@
 
   </div>
 
-  <!-- Photo Music -->
-  <audio id="photoMusic" preload="auto">
-    <source src="photo-music.mp3" type="audio/mpeg">
-  </audio>
+  <button class="next-btn" id="nextToVideo">
+    Next →
+  </button>
 
 </section>
 
-<!-- Photo Next Button -->
-<button class="photo-next-btn" id="nextToVideo">
-  Next →
-</button>
 
-<!-- Background Music for Photo -->
+<!-- Photo Background Music -->
 <audio id="photoMusic" preload="auto">
   <source src="photo-music.mp3" type="audio/mpeg">
 </audio>
 
-    <!-- 6. Video -->
-    <section class="screen" id="video-screen">
-      <div class="video-heading">
-        <p class="eyebrow">And finally...</p>
-        <h2>A little surprise for you 🎬</h2>
-      </div>
 
-      <div class="video-card" id="videoCard">
-        <video id="birthdayVideo" controls playsinline preload="metadata" style="object-fit: cover;">
-          <source src="birthday-video.mp4" type="video/mp4">
-          Your browser does not support video playback.
-        </video>
+<!-- 6. Final Message -->
+<section class="screen final-screen" id="final-screen">
 
-        <button class="play-overlay" id="playVideoBtn">
-          <span class="play-icon">▶</span>
-          <span>Tap to Play</span>
-        </button>
-      </div>
+  <div class="final-glow"></div>
 
-      <p class="final-line">Once again… Happy Birthday, Dada Bhai ❤️</p>
-    </section>
+  <div class="final-message">
 
-  </main>
+    <p class="final-eyebrow">
+      One Last Thing...
+    </p>
 
-  <script src="script.js"></script>
+    <div class="message-lines">
+
+      <p class="message-line line-1">
+        Some people make life brighter
+      </p>
+
+      <p class="message-line line-2">
+        simply by being there.
+      </p>
+
+      <p class="message-line line-3">
+        I'm lucky to have you as my Elder Brother.
+      </p>
+
+      <p class="message-line line-4">
+        Keep smiling. Keep growing. Keep being you. ❤️
+      </p>
+
+    </div>
+
+    <div class="final-birthday">
+
+      <span>Happy Birthday</span>
+
+      <strong>Dada Bhai ❤️</strong>
+
+    </div>
+
+    <p class="final-signature">
+      Made with ❤️ by Akash
+    </p>
+
+  </div>
+
+</section>
+
+</main>
+
+<script src="script.js"></script>
+
 </body>
 </html>
