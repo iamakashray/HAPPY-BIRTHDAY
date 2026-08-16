@@ -1327,3 +1327,14 @@ button {
   visibility: visible !important;
   opacity: 1 !important;
 }
+.screen {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+.screen.active {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
