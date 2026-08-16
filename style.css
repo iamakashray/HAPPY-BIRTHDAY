@@ -489,3 +489,43 @@ button {
     opacity: 0;
   }
 }
+/* ========================================
+   PHOTO SCREEN NEXT BUTTON FIX
+======================================== */
+
+#photo-screen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+/* Photo stays in the background */
+#photo-screen .photo-card {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Celebration stays above photo */
+#celebration-container {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+
+/* Next button stays visible above everything */
+#photo-screen #nextToVideo {
+  position: absolute;
+  z-index: 100;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  display: block;
+}
